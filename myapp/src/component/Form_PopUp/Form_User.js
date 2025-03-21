@@ -6,12 +6,11 @@ const Form_User = () => {
         name: "",
         job: "",
         currentLevel: "beginner",
-        goal: "",
-        studyTime: "",
+        goal: ""
     });
 
     const [inputLevel, setInputLevel] = useState(false);
-    const [showModal, setShowModal] = useState(false); 
+    const [showModal, setShowModal] = useState(false);
 
     const handleLevelChange = (e) => {
         const selectedValue = e.target.value;
@@ -24,9 +23,21 @@ const Form_User = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Dữ liệu người dùng:", userData);
+        const response = await fetch("http://localhost:8080/api/question/format", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+        });
+        if (!response.ok) {
+            throw new Error("Gửi dữ liệu thất bại!");
+        }
+        console.log("Gửi thành công:", response);
+        setShowModal(false);
+        // console.log("Dữ liệu người dùng:", userData);
         setShowModal(false);
     };
 
@@ -40,13 +51,10 @@ const Form_User = () => {
                 <div className="modal fade show d-block" tabIndex="-1">
                     <div className="modal-dialog">
                         <div className="modal-content">
-                            {/* Header */}
                             <div className="modal-header">
                                 <h5 className="modal-title">Thông tin người học</h5>
                                 <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
                             </div>
-
-                            {/* Body */}
                             <div className="modal-body">
                                 <form onSubmit={handleSubmit}>
                                     <div className="mb-3">
@@ -101,8 +109,6 @@ const Form_User = () => {
                                             required
                                         />
                                     </div>
-
-                                    {/* Footer */}
                                     <div className="modal-footer">
                                         <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>
                                             Đóng
