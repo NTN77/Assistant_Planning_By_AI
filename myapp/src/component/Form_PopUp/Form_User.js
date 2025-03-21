@@ -35,9 +35,8 @@ const Form_User = () => {
         if (!response.ok) {
             throw new Error("Gửi dữ liệu thất bại!");
         }
-        console.log("Gửi thành công:", response);
-        setShowModal(false);
-        // console.log("Dữ liệu người dùng:", userData);
+
+        console.log("Gửi thành công:", response.text());
         setShowModal(false);
     };
 
