@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import { useNavigate } from "react-router-dom";
+
 const Form_User = () => {
+    const navigate = useNavigate();
     const [userData, setUserData] = useState({
         name: "",
         job: "",
@@ -107,7 +110,7 @@ const Form_User = () => {
                                         <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>
                                             Đóng
                                         </button>
-                                        <button type="submit" className="btn btn-primary">
+                                        <button type="submit" className="btn btn-primary" onClick={() => navigate("/home")}>
                                             Tiếp tục
                                         </button>
                                     </div>
