@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./home.css";
 import Content from "../content/content";
 import "./navbar.css"
+import Form_User from "../Form_PopUp/Form_User";
 function Home() {
     const [plan, setPlan] = useState([]);
     const [title, setTitle] = useState("");
@@ -21,7 +22,7 @@ function Home() {
               "Content-Type": "application/json",
             },
           });
-    
+
           if (response.ok) {
             const data = await response.json();
             setPlan(data);
@@ -52,6 +53,7 @@ function Home() {
                 </div>
                 <Content title={title}/>
             </div>
+            <Form_User/>
         </div>
     );
 }
