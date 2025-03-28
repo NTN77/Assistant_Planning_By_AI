@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from "react";
-// import "bootstrap/dist/css/bootstrap.min.css";
-
-const Form_User = () => {
+import React, { useContext, useEffect, useState } from "react";
+const Form_User = ({responseApi , planList}) => {
     const [userData, setUserData] = useState({
         name: "",
         job: "",
         currentLevel: "beginner",
         goal: ""
     });
+
     const [inputLevel, setInputLevel] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [prompts, setPrompt] =useState("");    
-    const [responseApi, setResponseApi] = useState("");
     
 
     const handleLevelChange = (e) => {
@@ -38,29 +36,40 @@ const Form_User = () => {
         body.prompt = prompts;
         console.log(JSON.stringify(body))
         try {
-            const response = await fetch("http://192.168.123.180:11434/api/generate", {
+            const responses = await fetch("http://192.168.36.180:8080/api/generate", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(body),
             });
-            if (!response.ok) {
+            if (!responses.ok) {
                 throw new Error("Gửi dữ liệu thất bại!");
-            } else {
-                setResponseApi(response.response)
-                console.log(responseApi)
-                console.log(response)
+            }   else {
+                const data = await responses.json();
+                const contentData = data.response
+                responseApi(contentData);
+                console.log(contentData)
+                if (responseApi) {
+                    responseApi(data.response); // Gửi dữ liệu lên Home
+                }
+                // context.setReponse(contentData)
+                const newPlan = {
+                    id: Date.now(),
+                    title: userData.goal, 
+                    content: contentData
+                };
+                planList(newPlan);
             } 
 
         } catch (error) {
             console.error(error)
         }
         setShowModal(false);
-        // console.log("Dữ liệu người dùng:", userData);
-        setShowModal(false);
     };
-
+    useEffect(() => {
+       
+    }, [responseApi])
     return (
         <div className="form">
             <button className="btn btn-primary" onClick={() => setShowModal(true)}>

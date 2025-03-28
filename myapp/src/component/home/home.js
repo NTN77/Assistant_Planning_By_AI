@@ -1,40 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./home.css";
 import Content from "../content/content";
 import "./navbar.css"
 import Form_User from "../Form_PopUp/Form_User";
+import { ResponseContext } from "../ResponseContext";
 function Home() {
+    // const context = useContext(ResponseContext)
+    // const [content, setContent] = useState("");
     const [plan, setPlan] = useState([]);
     const [title, setTitle] = useState("");
+    const [planId, setPlanId] = useState(0);
     function handle(id) {
         plan.forEach((plan) => {
             if (plan.id === id) {
                 setTitle(plan.content);
+                setPlanId(id);
             }
         })
     }
-    async function getPlan() {
-        const url = "http://192.168.123.180:11434/api/generate";
-        try {
-          const response = await fetch(url, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-
-          if (response.ok) {
-            const data = await response.json();
-            setPlan(data);
-          } else {
-            throw new Error("Failed to fetch plans");
-          }
-        } catch (error) {
-        }
-      }
-    useEffect(() => {
-        getPlan();
-    }, [])
+    const handlePlanList = (data) => {
+        setPlan((prev) => [
+            ...prev,
+            data
+        ]);
+        console.log(plan)
+    }
+    const handleReponseAPi = (data) => {
+        console.log("Dữ liệu nhận được từ API:", data);
+        setTitle(data); // Cập nhật nội dung từ API
+        
+    };
     return (
         <div className="main">
             <div className="container1">
@@ -45,16 +40,16 @@ function Home() {
                     </div>
                     <ul className="navbar_list">
                         {plan.map((plan) => (
-                            <li onClick={() => handle(plan.id)} key={plan.id}  className="navbar_item">
+                            <li onClick={() => handle(plan.id)} key={plan.id}  className={`navbar_item ${planId === plan.id ? "active" : ""}`}>
                                 <p>{plan.title}</p>
                             </li>
                         ))}
                     </ul>
                 </div>
                 <Content title={title}/>
-                <Form_User/>
+                <Form_User responseApi={handleReponseAPi} planList={handlePlanList}/>
             </div>
-            <Form_User/>
+        
         </div>
     );
 }
