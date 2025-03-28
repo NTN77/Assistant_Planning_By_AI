@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./home.css";
 import Content from "../content/content";
 import "./navbar.css"
+import Form_User from "../Form_PopUp/Form_User";
 function Home() {
     const [plan, setPlan] = useState([]);
     const [title, setTitle] = useState("");
@@ -13,7 +14,7 @@ function Home() {
         })
     }
     async function getPlan() {
-        const url = "http://localhost:8080/ai-english/plan";
+        const url = "http://192.168.123.180:11434/api/generate";
         try {
           const response = await fetch(url, {
             method: "GET",
@@ -36,8 +37,8 @@ function Home() {
     }, [])
     return (
         <div className="main">
-            <div className="container">
-                <div className="navbar">
+            <div className="container1">
+                <div className="navbar1">
                     <div className="navbar_title">
                         <button className="title_button"><i class="fa-solid fa-bars"></i></button>
                         <h1>Nav bar</h1>
@@ -51,6 +52,7 @@ function Home() {
                     </ul>
                 </div>
                 <Content title={title}/>
+                <Form_User/>
             </div>
         </div>
     );

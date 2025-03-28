@@ -1,19 +1,18 @@
-import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 const Form_User = () => {
-    const navigate = useNavigate();
     const [userData, setUserData] = useState({
         name: "",
         job: "",
         currentLevel: "beginner",
         goal: ""
     });
-
     const [inputLevel, setInputLevel] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [prompts, setPrompt] =useState("");    
+    const [responseApi, setResponseApi] = useState("");
+    
 
     const handleLevelChange = (e) => {
         const selectedValue = e.target.value;
@@ -25,27 +24,50 @@ const Form_User = () => {
             setInputLevel(false);
         }
     };
+    const [body, setBody] = useState({
+        model:"llama3.2:1b",
+        prompt: "",
+        stream: false
+    })
 
+    const handleButtonSetBody = () => {
+        setPrompt("Tôi là "+userData.job + ".Tôi đang ở trình độ " + userData.currentLevel + ".Tôi muốn đạt được " + userData.goal + ".Hãy giúp tôi lập kế hoạch học tiếng anh để đạt được mục tiêu trên của tôi");
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch("http://localhost:8080/api/question/format", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userData),
-        });
-        if (!response.ok) {
-            throw new Error("Gửi dữ liệu thất bại!");
+        body.prompt = prompts;
+        console.log(JSON.stringify(body))
+        try {
+            const response = await fetch("http://192.168.123.180:11434/api/generate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(body),
+            });
+            // if (!response.ok) {
+            //     throw new Error("Gửi dữ liệu thất bại!");
+            // } else {
+            //     setResponseApi(response.response)
+            //     console.log(responseApi)
+            //     console.log(response)
+            // }
+            if(response.ok) {
+                setResponseApi(response.response)
+                    console.log(responseApi)
+                    console.log(response)
+                }
+
+        } catch (error) {
+            console.error(error)
         }
-        console.log("Gửi thành công:", response);
         setShowModal(false);
         // console.log("Dữ liệu người dùng:", userData);
         setShowModal(false);
     };
 
     return (
-        <div className="container mt-4">
+        <div className="form">
             <button className="btn btn-primary" onClick={() => setShowModal(true)}>
                 Mở Form
             </button>
@@ -116,7 +138,7 @@ const Form_User = () => {
                                         <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>
                                             Đóng
                                         </button>
-                                        <button type="submit" className="btn btn-primary" onClick={() => navigate("/home")}>
+                                        <button type="submit" className="btn btn-primary" onClick={handleButtonSetBody}>
                                             Tiếp tục
                                         </button>
                                     </div>

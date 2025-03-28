@@ -7,7 +7,7 @@ li {
     list-style-type: none;
 }
 
-.container {
+.container1 {
     padding: 20px;
     width: 100vw;
     background-color: #fff;
@@ -21,4 +21,10 @@ li {
 
 .logo img {
     width: 300px;
+}
+.form {
+    display: inline-block;
+    position: absolute;
+    bottom: 10px;
+    right: 20%;
 }

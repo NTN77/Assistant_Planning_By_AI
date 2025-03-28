@@ -1,4 +1,4 @@
-.navbar {
+.navbar1 {
     width: 20%;
     background-color: #ccc;
     border-radius: 5px;
@@ -9,10 +9,6 @@
     display: flex;
     margin: 10px;
     border-bottom: 1px solid #000;
-}
-
-.navbar_title h1 {
-
 }
 
 .title_button {
