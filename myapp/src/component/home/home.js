@@ -22,7 +22,7 @@ function Home() {
               "Content-Type": "application/json",
             },
           });
-    
+
           if (response.ok) {
             const data = await response.json();
             setPlan(data);
@@ -54,6 +54,7 @@ function Home() {
                 <Content title={title}/>
                 <Form_User/>
             </div>
+            <Form_User/>
         </div>
     );
 }
