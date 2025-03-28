@@ -45,18 +45,13 @@ const Form_User = () => {
                 },
                 body: JSON.stringify(body),
             });
-            // if (!response.ok) {
-            //     throw new Error("Gửi dữ liệu thất bại!");
-            // } else {
-            //     setResponseApi(response.response)
-            //     console.log(responseApi)
-            //     console.log(response)
-            // }
-            if(response.ok) {
+            if (!response.ok) {
+                throw new Error("Gửi dữ liệu thất bại!");
+            } else {
                 setResponseApi(response.response)
-                    console.log(responseApi)
-                    console.log(response)
-                }
+                console.log(responseApi)
+                console.log(response)
+            } 
 
         } catch (error) {
             console.error(error)
