@@ -35,8 +35,8 @@ function Home() {
             <div className="container1">
                 <div className="navbar1">
                     <div className="navbar_title">
-                        <button className="title_button"><i class="fa-solid fa-bars"></i></button>
-                        <h1>Nav bar</h1>
+                        {/* <button className="title_button"><i class="fa-solid fa-bars"></i></button> */}
+                        <h1>Danh sách kế hoạch</h1>
                     </div>
                     <ul className="navbar_list">
                         {plan.map((plan) => (

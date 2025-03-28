@@ -36,7 +36,7 @@ const Form_User = ({responseApi , planList}) => {
         body.prompt = prompts;
         console.log(JSON.stringify(body))
         try {
-            const responses = await fetch("http://192.168.36.180:8080/api/generate", {
+            const responses = await fetch("http://192.168.62.180:8080/api/generate", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -73,7 +73,7 @@ const Form_User = ({responseApi , planList}) => {
     return (
         <div className="form">
             <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-                Mở Form
+                Tạo kế hoạch
             </button>
 
             {showModal && (

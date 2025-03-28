@@ -17,6 +17,10 @@
 
 .plan-text {
     text-align: justify;
-    font-size: 16px;
-    
+    font-size: 18px;
+    padding: 4px;
+}
+
+.plan-text:hover {
+    box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.3);
 }

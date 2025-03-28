@@ -6,9 +6,15 @@
 }
 
 .navbar_title {
-    display: flex;
     margin: 10px;
     border-bottom: 1px solid #000;
+    text-align: center;
+}
+
+.navbar_title h1 {
+    display: inline-block;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .title_button {
